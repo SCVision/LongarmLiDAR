@@ -32,4 +32,4 @@ scatter3(X,Y,Z,1,'.');
 xlabel('x');
 ylabel('y');
 zlabel('z');
-title('pointcloud display');
+% title('pointcloud display');

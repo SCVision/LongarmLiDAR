@@ -6,7 +6,7 @@ function [range_processed] = remove_min_outlier(range, MIN_RANGE)
 %     range_processed - processed range data.
 %
 % Writen by LIN, Jingyu (linjy02@hotmail.com), LI, Shuqing (jay_issaac@163.com), 20191202
-
+% Note: bad effect in many cases
 if MIN_RANGE < 0.03
     MIN_RANGE = 0.03;
 end

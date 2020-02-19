@@ -1,5 +1,6 @@
 function [range, angleV, angleH, timestamp] = read_scandata(txtfile) 
 % Function: import raw data scanned by our 3D Lidar.
+% Input:
 %     txtfile - data file name (txt format).
 % Output:
 %     range - range data (H*V). 
