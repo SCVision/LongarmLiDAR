@@ -1,2 +1,2 @@
 # LongarmLIDAR
-Data and code for long-arm 3D LIDAR
+Data and codes for long-arm 3D LIDAR
