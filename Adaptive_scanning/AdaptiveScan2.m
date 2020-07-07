@@ -1,4 +1,4 @@
-% Adaptive Scanning for Long-arm LIDAR
+% Adaptive Resolution Scanning for Long-arm LIDAR
 % This is a demonstration program. Input a scanned data (usually scanned 
 % with a fixed step), and it will do the following work:
 % 1) update angular steps Dphi_s based on point density
@@ -10,7 +10,7 @@
 % dataname - data file name
 % nPhi1, nPhi2 - used to trim head and tail of data
 % dist_s - working distance
-% xL_max - max distance for searching objects
+% xL_max, zL_max - max distance and height for searching objects
 % P - numbers for checking density and updating angular steps
 % W_smooth, W_seg - control the effect of step processing
 %
@@ -25,25 +25,25 @@ path(path,'..\Funcs')
 path(path,'.\adaptive_funcs')
 
 %% select data 
-datano = 2; % select data 1~3
+datano = 1; % select data 1~3
 bReverse = false; % virtually scan from the other end
 Dtheta = -1.396394; R = 0.1803429337; % hardware parameters
 switch(datano)
     case 1
         dir = 'data1\fixed\';
-        dataname = 'batchScanned20200627135522';
+        dataname = 'batchScanned20200703172752';
         nPhi1 = 21; nPhi2 = 3160; % choose horizontal data range
     case 2
         dir = 'data2\fixed\';
-        dataname = 'batchScanned20200627142911';
+        dataname = 'batchScanned20200703180037';
         nPhi1 = 21; nPhi2 = 3160; % choose horizontal data range
     case 3
         dir = 'data3\fixed\';
-        dataname = 'batchScanned20200627145734';
+        dataname = 'batchScanned20200703191706';
         nPhi1 = 21; nPhi2 = 3160; % choose horizontal data range
     otherwise % put new data here
         dir = 'data1\fixed\';
-        dataname = 'batchScanned20200627135522';
+        dataname = 'batchScanned20200703172752';
         nPhi1 = 21; nPhi2 = 3160; % choose horizontal data range
 end
 
@@ -62,10 +62,11 @@ angleH = angleH_raw;
 % show data
 ps = range2points(range_raw, angleV, angleH_raw, R, Dtheta);
 figure(10);
-scatter3(ps(:,1),ps(:,2),ps(:,3),1,'.'); title(dataname)
-xlabel('x'); ylabel('y'); zlabel('z');
-xlim([-1.5,2.1]); ylim([-2 2]); zlim([-0.5,2])
+scatter3(ps(:,1),ps(:,2),ps(:,3),1,'.'); 
+xlim([-2,2]); ylim([-1.5 1]); zlim([-0.5,2])
 az = 120; el = 80; view(az,el)
+xlabel('x'); ylabel('y'); zlabel('z');
+title(dataname)
 % figure(11); plot(angleH_raw); title(['phi - ', dataname])
 % return
 
@@ -95,9 +96,10 @@ e_hori = dist_s*Dphi_s0*Kdr; % expected horizontal space between points
 dens_s = 1/(e_hori*dist_s*Dtheta_s0*Kdr); % expected density
 hG = 6*e_hori; % width of Gaussian (m)
 
-xL_max = 3; % max distance for searching objects
+xL_max = 2; % max distance for searching objects
+zL_max = 2; % max height for searching objects
 xL = 0.4:0.02:xL_max; % horizontal points in scanning plane for density
-zL = 0:0.1:3; % vertical points in scanning plane for density
+zL = 0:0.1:zL_max; % vertical points in scanning plane for density
 
 Dphi_rho = 4; % phi range for calculating density (deg)
 % Dphi_rho = 30*phi_step; % phi range for calculating density (deg)
@@ -149,15 +151,15 @@ for n = nPhi1 : n_step: nPhi2
             Dphi_s(idx_q) = min(Dphi_s(idx_q), Dphi_sq);
             
             % output message
-            fprintf('p=%.1f +q %.1f, beta %.1f -- %.1f, step %.4f\n',...
-                phi,phi_q,beta,beta+180-2*alpha,Dphi_sq );
+            fprintf('p=%.1f d%.0fk +q %.1f, beta %.1f -- %.1f, step %.4f\n',...
+                phi,objDens/1000,phi_q,beta,beta+180-2*alpha,Dphi_sq );
         else
             % output message
-            fprintf('p=%.1f +q out of range\n', phi);
+            fprintf('p=%.1f d%.0fk +q out of range\n', phi,objDens/1000);
         end
     else
         % output message
-        fprintf('p=%.1f +q no object\n', phi);
+        fprintf('p=%.1f d%.0fk +q no object\n', phi,objDens/1000);
     end
     
     % negative orientation, -xL, -angleV
@@ -185,15 +187,15 @@ for n = nPhi1 : n_step: nPhi2
             Dphi_s(idx_q) = min(Dphi_s(idx_q), Dphi_sq);
             
             % output message
-            fprintf('p=%.1f -q %.1f, beta %.1f -- %.1f, step %.4f\n',...
-                phi,phi_q,beta,beta+180-2*alpha,Dphi_sq );
+            fprintf('p=%.1f d%.0fk -q %.1f, beta %.1f -- %.1f, step %.4f\n',...
+                phi,objDens/1000,phi_q,beta,beta+180-2*alpha,Dphi_sq );
         else
             % output message
-            fprintf('p=%.1f -q out of range\n', phi);
+            fprintf('p=%.1f d%.0fk -q out of range\n', phi,objDens/1000);
         end
     else
         % output message
-        fprintf('p=%.1f -q no object\n', phi);
+        fprintf('p=%.1f d%.0fk -q no object\n', phi,objDens/1000);
     end
 end
 fprintf('End of updating. \n\n');
@@ -208,8 +210,8 @@ for i=1+W_smooth:length(Dphi_s)-W_smooth
 end
 
 % segment
-W_seg = 6; % control segmentation effect
-thr = 0.3; % control segmentation
+W_seg = 16; % control segmentation effect
+thr = 0.05; % control segmentation
 n = (1:W_seg);
 Dphi_s_final = Dphi_s_smooth;
 D_Dphi_s = abs(diff(Dphi_s_smooth));
@@ -235,14 +237,15 @@ Dphi_s_final(np0:end) = avgDphiSeg;
 fprintf('End of scanning commands\n');
 
 figure(1); plot(phi_p, [Dphi_s Dphi_s_smooth],phi_p,Dphi_s_final,'k'); 
-title('adaptive angular steps'); ylim([0, Dphi_s0*1.1])
+ylim([0, Dphi_s0*1.1]);
+title('adaptive angular steps'); 
 legend('origin','smoothed','final')
 
 %% show results
-% % density
-% figure(2); plot(phi_p, [surfDens dens_s*ones(N,1)]); 
-% title('point density at object surface')
-% legend('positive plane', 'negative plane', 'expected density')
+% density
+figure(2); plot(phi_p, [surfDens dens_s*ones(P,1)]); 
+title('point density at object surface')
+legend('positive plane', 'negative plane', 'expected density')
 
 % surface position
 pntSurf_p = zeros(P,3); % positions at + scanning plane
