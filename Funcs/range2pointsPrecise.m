@@ -6,7 +6,7 @@ function pntcloud = range2pointsPrecise(range, angleV, angleH, ...
 %     range - range data (H*V). 
 %     angleV - vertical angles theta (V*1).
 %     angleH - horizontal angles phi (H*1). 
-%     R,Dtheta1, Dphi1, Dtheta2 - calibrated parameters 
+%     R, Dphi, Dpsi, Dtheta - calibrated parameters 
 % Output:
 %     pntcloud - x, y, z coordinates of points ((H*V) * 3)
 % Demo:
