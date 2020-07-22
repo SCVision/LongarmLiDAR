@@ -23,7 +23,7 @@ range = replace_outlier(range,0.1, 10);
 
 %% show point cloud
 R=0.195000; Dphi=0.0000; Dpsi=0.4000; Dtheta=-2.2000;
-ps = range2pointsPrecise_ts(range, angleV, angleH, R,Dphi,Dpsi,Dtheta);
+ps = range2pointsPrecise(range, angleV, angleH, R,Dphi,Dpsi,Dtheta);
 figure(1); 
 scatter3(ps(:,1),ps(:,2),ps(:,3),1,'.');
 az = 190; el = 60; view(az,el)

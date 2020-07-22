@@ -18,7 +18,7 @@ if subdir(1)=='0'
 else
     R=0.1919; Dphi=0.0000; Dpsi=0.4000; Dtheta=-1.74;
 end
-ps = range2pointsPrecise_ts(range, angleV, angleH, R,Dphi,Dpsi,Dtheta);
+ps = range2pointsPrecise(range, angleV, angleH, R,Dphi,Dpsi,Dtheta);
 figure(1); 
 scatter3(ps(:,1),ps(:,2),ps(:,3),1,'.');
 az = 30; el = 60; view(az,el)
