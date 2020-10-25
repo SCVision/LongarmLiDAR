@@ -25,7 +25,7 @@ path(path,'..\Funcs')
 path(path,'.\adaptive_funcs')
 
 %% select data 
-datano = 1; % select data 1~3
+datano = 4; % select data 1~4
 bReverse = false; % virtually scan from the other end
 Dtheta = -1.396394; R = 0.1803429337; % hardware parameters
 switch(datano)
@@ -40,6 +40,10 @@ switch(datano)
     case 3
         dir = 'data3\fixed\';
         dataname = 'batchScanned20200703191706';
+        nPhi1 = 21; nPhi2 = 3160; % choose horizontal data range
+    case 4
+        dir = 'data4\fixed\';
+        dataname = 'batchScanned20201024132319';
         nPhi1 = 21; nPhi2 = 3160; % choose horizontal data range
     otherwise % put new data here
         dir = 'data1\fixed\';
@@ -63,7 +67,7 @@ angleH = angleH_raw;
 ps = range2points(range_raw, angleV, angleH_raw, R, Dtheta);
 figure(10);
 scatter3(ps(:,1),ps(:,2),ps(:,3),1,'.'); 
-xlim([-2,2]); ylim([-1.5 1]); zlim([-0.5,2])
+xlim([-2,2]); ylim([-1.5 1.5]); zlim([-0.5,2])
 az = 120; el = 80; view(az,el)
 xlabel('x'); ylabel('y'); zlabel('z');
 title(dataname)

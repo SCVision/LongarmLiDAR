@@ -1,6 +1,6 @@
 % Comparing Adaptive Resolution and Fixed Resolution
 %% select data 
-datano = 1; % select data 1~3
+datano = 4; % select data 1~4
 Dtheta = -1.396394; R = 0.1803429337; % hardware parameters
 switch(datano)
     case 1
@@ -18,6 +18,11 @@ switch(datano)
         dir_adp = 'data3\adaptive\';
         dataname = 'batchScanned20200703191706';
         dataname_adp = 'batchScanned20200703193139';
+    case 4
+        dir = 'data4\fixed\';
+        dir_adp = 'data4\adaptive\';
+        dataname = 'batchScanned20201024132319';
+        dataname_adp = 'batchScanned20201024133958';
     otherwise % put new data here
         dir = 'data1\fixed\';
         dir_adp = 'data1\adaptive\';
