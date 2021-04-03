@@ -12,3 +12,6 @@ Data and codes for long-arm 3D LIDAR
 - Adaptive_scanning: Demonstration for adaptive resolution scanning. Objects are box, sphere and column, distances are from 600mm to 2000mm. 
 
 - Funcs: General functions supporting commands in the other paths.
+
+- LiDAR_sim: Simulate adaptive resulition scanning or fixed resulition scanning of a long-arm lidar in a 2D map (top view).
+- 
