@@ -14,4 +14,3 @@ Data and codes for long-arm 3D LIDAR
 - Funcs: General functions supporting commands in the other paths.
 
 - LiDAR_sim: Simulate adaptive resulition scanning or fixed resulition scanning of a long-arm lidar in a 2D map (top view).
-- 
