@@ -1,6 +1,6 @@
 % simulation of long-arm LiDAR in adaptive mode
 path(path,'.\sim_funcs')
-adp = 0; % switch adaptive scanning
+adp = 1; % switch adaptive scanning
 
 % parameters
 arm_len = 100;
@@ -24,22 +24,24 @@ pos = [1500, 1500]; % LiDAR position
 if adp>0
     % adaptive mode
     figure(10);
-    plot(pnts_p(:,1),size(map,1)-pnts_p(:,2),'.b',...
-        pnts_n(:,1),size(map,1)-pnts_n(:,2),'.r')
-    legend('p','n'); xlim([0,size(map,2)]);ylim([0,size(map,1)]);
-    title('points - adaptive')
-    figure(11); plot(phi_obj,[dens_p dens_n])
-    legend('p','n'); ylim([0,0.12]);
-    title('density - adaptive')
+    plot(pnts_p(:,1),size(map,1)-pnts_p(:,2),'.r',...
+        pnts_n(:,1),size(map,1)-pnts_n(:,2),'.b')
+    xlim([0,size(map,2)]);ylim([0,size(map,1)]);
+    legend('p','n'); title('points - adaptive')
+    figure(11); 
+    plot(phi_obj,dens_p,'r',phi_obj,dens_n,'b')
+    ylim([0,0.12]); xlim([0 360])
+    legend('p','n'); title('density - adaptive')
 else
     % fixed mode
     figure(20);
-    plot(pnts_p(:,1),size(map,1)-pnts_p(:,2),'.b',...
-        pnts_n(:,1),size(map,1)-pnts_n(:,2),'.r')
-    legend('p','n'); xlim([0,size(map,2)]);ylim([0,size(map,1)]);
-    title('points - fixed step')
-    figure(21); plot(phi_obj,[dens_p dens_n])
-    legend('p','n'); ylim([0,0.12]);
-    title('density - fixed step')
+    plot(pnts_p(:,1),size(map,1)-pnts_p(:,2),'.r',...
+        pnts_n(:,1),size(map,1)-pnts_n(:,2),'.b')
+    xlim([0,size(map,2)]);ylim([0,size(map,1)]);
+    legend('p','n'); title('points - fixed step')
+    figure(21); 
+    plot(phi_obj,dens_p,'r',phi_obj,dens_n,'b')
+    ylim([0,0.12]); xlim([0 360])
+    legend('p','n'); title('density - fixed step')
 end
 
