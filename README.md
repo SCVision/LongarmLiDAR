@@ -1,6 +1,7 @@
 # LongarmLIDAR
 Please cite this paper when using the data and codes:
-Jingyu Lin, Shuqing Li, Wen Dong, Takafumi Matsumaru, Shengli Xie. Long-arm three-dimensional LiDAR for anti-occlusion and anti-sparsity point clouds. IEEE Transactions on Instrumentation and Measurement, vol. 70, pp. 1-10, art no. 4506610, 2021. DOI: 10.1109/TIM.2021.3104019
+
+[1] Jingyu Lin, Shuqing Li, Wen Dong, Takafumi Matsumaru, Shengli Xie. Long-arm three-dimensional LiDAR for anti-occlusion and anti-sparsity point clouds. IEEE Transactions on Instrumentation and Measurement, vol. 70, pp. 1-10, art no. 4506610, 2021. DOI: 10.1109/TIM.2021.3104019
 
 Data and codes for long-arm 3D LIDAR
 
